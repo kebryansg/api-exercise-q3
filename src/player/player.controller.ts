@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from "@nestjs/swagger";
 import { PlayerService } from './player.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 
+@ApiTags('Player')
 @Controller('player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
