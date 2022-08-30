@@ -1,26 +1,24 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PlayerModule } from './player/player.module';
-import { PositionModule } from './position/position.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { environments } from "../config/environments";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { DatabaseModule } from "./database.module";
+import { PlayerModule } from "./player/player.module";
+import { PositionModule } from "./position/position.module";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'adm12345',
-      database: 'legends',
-      autoLoadEntities: true,
-      synchronize: true,
+    ConfigModule.forRoot({
+      envFilePath: environments[process.env.NODE_ENV] || ".env",
+      isGlobal: true
     }),
+    DatabaseModule,
     PlayerModule,
     PositionModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
-export class AppModule {}
+export class AppModule {
+}
