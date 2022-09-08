@@ -24,15 +24,13 @@ export class PlayerService {
 
   findByName(idAuthor: number, querySearch: string) {
     return this.playerRepository.createQueryBuilder("player")
-      .where("player.id-author = :author")
-      .where((qb) => {
-        return qb.where(`player.firstName = :search`)
-          .orWhere(`player.lastName = :search`);
-      })
+      .where("player.id-author = :author AND (LOWER(player.`first-name`) LIKE(:search) OR LOWER(player.`last-name`) LIKE(:search))")
       .setParameters({
         author: idAuthor,
-        search: `like("%${querySearch}%")`
-      });
+        search: `%${querySearch}%`
+      })
+      .select('player.*')
+      .getRawMany();
   }
 
   findOne(id: number) {
