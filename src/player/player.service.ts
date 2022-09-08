@@ -16,8 +16,23 @@ export class PlayerService {
     return this.playerRepository.save(createPlayerDto);
   }
 
-  findAll() {
-    return this.playerRepository.find();
+  findAll(idAuthor: number) {
+    return this.playerRepository.find({
+      where: { idAuthor }
+    });
+  }
+
+  findByName(idAuthor: number, querySearch: number) {
+    return this.playerRepository.createQueryBuilder("player")
+      .where("player.id-author = :author")
+      .where((qb) => {
+        return qb.where(`player.firstName = :search`)
+          .orWhere(`player.lastName = :search`);
+      })
+      .setParameters({
+        author: idAuthor,
+        search: `like("%${querySearch}%")`
+      });
   }
 
   findOne(id: number) {
