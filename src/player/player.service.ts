@@ -22,7 +22,7 @@ export class PlayerService {
     });
   }
 
-  findByName(idAuthor: number, querySearch: number) {
+  findByName(idAuthor: number, querySearch: string) {
     return this.playerRepository.createQueryBuilder("player")
       .where("player.id-author = :author")
       .where((qb) => {

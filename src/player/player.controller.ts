@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from "@nestjs/
 import { Request } from "express";
 import { ApiHeader, ApiTags } from "@nestjs/swagger";
 import { CreatePlayerDto } from "./dto/create-player.dto";
+import { SearchPlayerDto } from "./dto/search-player.dto";
 import { UpdatePlayerDto } from "./dto/update-player.dto";
 import { PlayerService } from "./player.service";
 
@@ -31,7 +32,7 @@ export class PlayerController {
     name: "author",
     description: "Custom Author ID"
   })
-  findByName(@Req() request: Request, @Body() body: any) {
+  findByName(@Req() request: Request, @Body() body: SearchPlayerDto) {
     const author = request.headers["author"];
     const { search } = body;
     return this.playerService.findByName(+author, search.toLowerCase());
