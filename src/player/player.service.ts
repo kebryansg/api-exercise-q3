@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { CreatePlayerDto } from "./dto/create-player.dto";
 import { UpdatePlayerDto } from "./dto/update-player.dto";
 import { Player } from "./entities/player.entity";
+import { Player as IPlayer } from "./interfaces/player.interface";
 
 @Injectable()
 export class PlayerService {
@@ -29,8 +30,25 @@ export class PlayerService {
         author: idAuthor,
         search: `%${querySearch}%`
       })
-      .select('player.*')
-      .getRawMany();
+      .select("player.*")
+      .getRawMany()
+      .then(data => {
+        return data.map(item => {
+          return {
+            id: item["id"],
+            firstName: item["first-name"],
+            lastName: item["last-name"],
+            image: item["image"],
+            attack: item["attack"],
+            defense: item["defense"],
+            skills: item["skills"],
+
+            idAuthor: item["id-author"],
+            idPosition: item["id-position"]
+          } as IPlayer;
+
+        });
+      });
   }
 
   findOne(id: number) {
