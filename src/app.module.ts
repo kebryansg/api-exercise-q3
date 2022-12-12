@@ -1,24 +1,23 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { environments } from "../config/environments";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { DatabaseModule } from "./database.module";
-import { PlayerModule } from "./player/player.module";
-import { PositionModule } from "./position/position.module";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { environments } from '../config/environments';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { DatabaseModule } from './database.module';
+import { CatalogoModule } from './catalogo/catalogo.module';
+import { EstadoModule } from './estados/estado.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: environments[process.env.NODE_ENV] || ".env",
-      isGlobal: true
+      envFilePath: environments[process.env.NODE_ENV] || '.env',
+      isGlobal: true,
     }),
     DatabaseModule,
-    PlayerModule,
-    PositionModule
+    CatalogoModule,
+    EstadoModule,
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
-export class AppModule {
-}
+export class AppModule {}
