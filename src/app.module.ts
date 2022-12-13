@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database.module';
 import { CatalogoModule } from './catalogo/catalogo.module';
 import { EstadoModule } from './estados/estado.module';
+import { RegistroModule } from './registro/registro.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EstadoModule } from './estados/estado.module';
     DatabaseModule,
     CatalogoModule,
     EstadoModule,
+    RegistroModule,
   ],
   controllers: [AppController],
   providers: [AppService],
